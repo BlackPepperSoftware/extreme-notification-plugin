@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.extremenotification.LoggingNotificationEndpoint
+package org.jenkinsci.plugins.extremenotification.NotificationEndpoint
 
 def f=namespace(lib.FormTagLib)
 def st=namespace("jelly:stapler")

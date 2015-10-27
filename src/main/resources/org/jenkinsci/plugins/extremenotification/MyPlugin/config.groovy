@@ -1,6 +1,5 @@
-package org.jenkinsci.plugins.extremenotification.MyGlobalConfiguration
+package org.jenkinsci.plugins.extremenotification.MyPlugin
 
-import org.jenkinsci.plugins.extremenotification.MyPlugin;
 import org.jenkinsci.plugins.extremenotification.NotificationEndpoint
 
 def f=namespace(lib.FormTagLib)

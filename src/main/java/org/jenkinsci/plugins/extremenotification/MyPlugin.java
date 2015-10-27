@@ -6,22 +6,18 @@ import hudson.init.Initializer;
 import hudson.model.Descriptor;
 import hudson.model.Descriptor.FormException;
 import hudson.util.DescribableList;
+import jenkins.model.Jenkins;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
-
-import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
-
 import org.jenkinsci.plugins.extremenotification.NotificationEndpoint.EndpointEvent;
 import org.kohsuke.stapler.StaplerRequest;
-
-import com.google.common.collect.Maps;
 
 public class MyPlugin extends Plugin {
 	
@@ -64,6 +60,10 @@ public class MyPlugin extends Plugin {
 	public static final String JENKINS_JOB_FINALIZED = "jenkins.job.finalized";
 	
 	public static final String JENKINS_JOB_DELETED = "jenkins.job.deleted";
+
+	public static final String JENKINS_JOB_MODULE_COMPLETED = "jenkins.job.module.completed";
+
+	public static final String JENKINS_JOB_MODULE_FINALIZED = "jenkins.job.module.finalized";
 	
 	public static final String JENKINS_MATRIX_CONFIG_STARTED = "jenkins.matrix-config.started";
 	
@@ -76,6 +76,8 @@ public class MyPlugin extends Plugin {
 	public static final String JENKINS_SAVEABLE_CHANGE = "jenkins.saveable.change";
 	
 	public static final String JENKINS_SCM_CHANGELOG_PARSED = "jenkins.scm.changelog.parsed";
+
+	public static final String JENKINS_SCM_CHECKOUT = "jenkins.scm.checkout";
 
 	public static final String JENKINS_SCM_POLL_BEFORE = "jenkins.scm.poll.before";
 	
@@ -147,7 +149,7 @@ public class MyPlugin extends Plugin {
 		instance = Jenkins.getInstance().getPlugin(MyPlugin.class);
 	}
 	
-	private DescribableList<NotificationEndpoint, Descriptor<NotificationEndpoint>> endpoints = new DescribableList<NotificationEndpoint, Descriptor<NotificationEndpoint>>(this);
+	private DescribableList<NotificationEndpoint, Descriptor<NotificationEndpoint>> endpoints = new DescribableList<>(this);
 	
 	@Override
 	public void start() throws Exception {
@@ -201,15 +203,20 @@ public class MyPlugin extends Plugin {
 		
 		private final String name;
 		
-		private final Map<String, Object> args = Maps.newHashMap();
-		
-		public Event(String name, Object... args) {
+		private final Map<String, Object> args = new HashMap<>();
+
+		private final Map<String, Object> payload = new HashMap<>();
+
+		public Event(String name) {
 			this.timestamp = System.currentTimeMillis();
 			this.name = name;
 			this.args.put("event", this);
-			for (int i = 0; i < args.length; i+=2) {
-				this.args.put((String) args[i], args[i+1]);
-			}
+		}
+		
+		public Event(String name, Map<String, Object> args, Map<String, Object> payload) {
+			this(name);
+			this.args.putAll(args);
+			this.payload.putAll(payload);
 		}
 		
 		public Long getTimestamp() {
@@ -223,7 +230,27 @@ public class MyPlugin extends Plugin {
 		public Map<String, Object> getArgs() {
 			return args;
 		}
-		
+
+		public Map<String, Object> getPayload() {
+			return payload;
+		}
 	}
 
+	public static Map<String,Object> asMap(Object... args) {
+		if (args.length % 2 != 0) {
+			throw new IllegalArgumentException("Must supply even number of arguments");
+		}
+
+		Map <String,Object> values = new HashMap<>();
+
+		for (int i = 0; i < args.length; i+=2) {
+			values.put((String) args[i], args[i + 1]);
+		}
+
+		return values;
+	}
+
+	public static String orDefault(String value, String defaultVal) {
+		return value == null || value.isEmpty() ? defaultVal : value;
+	}
 }

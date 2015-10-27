@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.extremenotification.LoggingNotificationEndpoint
+package org.jenkinsci.plugins.extremenotification.WebHookNotificationEndpoint
 
 def f=namespace(lib.FormTagLib)
 

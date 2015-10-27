@@ -5,9 +5,7 @@ import hudson.util.ListBoxModel;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import net.sf.json.JSONObject;
-
 import org.jenkinsci.plugins.extremenotification.MyPlugin.Event;
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -95,7 +93,7 @@ public class LoggingNotificationEndpoint extends NotificationEndpoint {
         
         @Override
 		protected EndpointEventCustom parseCustom(JSONObject event) {
-        	final JSONObject customJSON = ((JSONObject)event).getJSONObject("custom");
+        	final JSONObject customJSON = event.getJSONObject("custom");
 			if (!customJSON.isNullObject()) {
 				return new LoggingEndpointEventCustom(customJSON.getString("format"));
 			}

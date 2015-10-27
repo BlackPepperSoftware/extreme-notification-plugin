@@ -1,25 +1,20 @@
 package org.jenkinsci.plugins.extremenotification;
 
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
 import hudson.DescriptorExtensionList;
 import hudson.ExtensionPoint;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
 import hudson.util.ListBoxModel;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import jenkins.model.Jenkins;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
-import org.codehaus.groovy.runtime.GStringImpl;
-import org.jenkinsci.plugins.extremenotification.MyPlugin.Event;
-import org.kohsuke.stapler.StaplerRequest;
 
 import com.google.common.collect.Maps;
+import groovy.lang.Binding;
+import groovy.lang.GroovyShell;
+import java.util.HashMap;
+import java.util.Map;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.kohsuke.stapler.StaplerRequest;
 
 public abstract class NotificationEndpoint extends AbstractDescribableImpl<NotificationEndpoint> implements ExtensionPoint {
 	
@@ -27,25 +22,25 @@ public abstract class NotificationEndpoint extends AbstractDescribableImpl<Notif
         return Jenkins.getInstance().getDescriptorList(NotificationEndpoint.class);
     }
 	
-	public abstract void notify(Event event);
+	public abstract void notify(MyPlugin.Event event);
 	
-	public abstract void notify(Event event, EndpointEvent endpointEvent);
+	public abstract void notify(MyPlugin.Event event, EndpointEvent endpointEvent);
 	
 	private Map<String, EndpointEvent> events = Maps.newHashMap();
 	
 	public Map<String, EndpointEvent> getEvents() {
 		return events;
 	}
-	
-	protected String interpolate(String value, Event event) {
+
+	protected String interpolate(String value, MyPlugin.Event event) {
 		return interpolate(value, event, new HashMap<String, Object>());
 	}
-	
-	protected String interpolate(String value, Event event, Map<String, Object> extraArgs) {
+
+	protected String interpolate(String value, MyPlugin.Event event, Map<String, Object> extraArgs) {
 		final Map<String, Object> args = Maps.newHashMap(event.getArgs());
 		args.putAll(extraArgs);
 		final GroovyShell shell = new GroovyShell(new Binding(args));
-		return ((GStringImpl) shell.evaluate('"' + value + '"')).toString();
+		return shell.evaluate('"' + value + '"').toString();
 	}
 	
 	public static abstract class DescriptorImpl extends Descriptor<NotificationEndpoint> {
@@ -60,7 +55,7 @@ public abstract class NotificationEndpoint extends AbstractDescribableImpl<Notif
         
         @Override
         public NotificationEndpoint newInstance(StaplerRequest req, JSONObject formData) throws hudson.model.Descriptor.FormException {
-        	final NotificationEndpoint instance = (NotificationEndpoint) super.newInstance(req, formData);
+        	final NotificationEndpoint instance = super.newInstance(req, formData);
         	
         	final JSONObject events = formData.getJSONObject("events");
         	if (!events.isNullObject()) {
@@ -86,7 +81,7 @@ public abstract class NotificationEndpoint extends AbstractDescribableImpl<Notif
         
     }
 	
-	public static interface EndpointEventCustom {
+	public interface EndpointEventCustom {
 		
 	}
 	

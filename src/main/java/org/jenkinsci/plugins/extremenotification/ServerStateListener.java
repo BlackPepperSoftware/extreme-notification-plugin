@@ -10,10 +10,9 @@ import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_STARTED
 import hudson.Extension;
 import hudson.init.InitMilestone;
 import hudson.init.Initializer;
+import jenkins.YesNoMaybe;
 
 import java.io.IOException;
-
-import jenkins.YesNoMaybe;
 
 @Extension(dynamicLoadable=YesNoMaybe.YES)
 public class ServerStateListener {
