@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.extremenotification;
+package org.jenkinsci.plugins.extremenotification.listeners;
 
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_JOB_COMPLETED;
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_JOB_DELETED;
@@ -21,6 +21,7 @@ import jenkins.YesNoMaybe;
 
 import java.util.Map;
 import javax.annotation.Nonnull;
+import org.jenkinsci.plugins.extremenotification.MyPlugin;
 
 @Extension(dynamicLoadable=YesNoMaybe.YES)
 public class MyRunListener extends RunListener<Run<?, ?>> {

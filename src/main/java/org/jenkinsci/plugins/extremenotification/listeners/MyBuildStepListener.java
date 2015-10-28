@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.extremenotification;
+package org.jenkinsci.plugins.extremenotification.listeners;
 
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_BUILD_STEP_FINISH;
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_BUILD_STEP_START;
@@ -13,6 +13,7 @@ import jenkins.YesNoMaybe;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.jenkinsci.plugins.extremenotification.MyPlugin;
 
 @Extension(dynamicLoadable=YesNoMaybe.YES)
 public class MyBuildStepListener extends BuildStepListener {

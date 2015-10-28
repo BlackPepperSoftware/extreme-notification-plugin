@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.extremenotification;
+package org.jenkinsci.plugins.extremenotification.listeners;
 
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_COMPUTER_CONFIGURATION;
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_COMPUTER_FAILURE;
@@ -17,6 +17,7 @@ import jenkins.YesNoMaybe;
 
 import java.io.IOException;
 import javax.annotation.Nonnull;
+import org.jenkinsci.plugins.extremenotification.MyPlugin;
 
 @Extension(dynamicLoadable=YesNoMaybe.YES)
 public class MyComputerListener extends ComputerListener {

@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.extremenotification;
+package org.jenkinsci.plugins.extremenotification.listeners;
 
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_SCM_POLL_BEFORE;
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_SCM_POLL_FAILED;
@@ -10,6 +10,8 @@ import hudson.model.TaskListener;
 import hudson.model.listeners.SCMPollListener;
 import hudson.scm.PollingResult;
 import jenkins.YesNoMaybe;
+
+import org.jenkinsci.plugins.extremenotification.MyPlugin;
 
 @Extension(dynamicLoadable=YesNoMaybe.YES)
 public class MySCMPollListener extends SCMPollListener {

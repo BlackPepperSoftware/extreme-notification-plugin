@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.extremenotification;
+package org.jenkinsci.plugins.extremenotification.listeners;
 
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_COMPLETED;
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_JOBS_LOADED;
@@ -13,6 +13,7 @@ import hudson.init.Initializer;
 import jenkins.YesNoMaybe;
 
 import java.io.IOException;
+import org.jenkinsci.plugins.extremenotification.MyPlugin;
 
 @Extension(dynamicLoadable=YesNoMaybe.YES)
 public class ServerStateListener {

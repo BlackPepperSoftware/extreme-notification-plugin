@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.extremenotification;
+package org.jenkinsci.plugins.extremenotification.listeners;
 
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_ITEM_COPIED;
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_ITEM_CREATED;
@@ -12,6 +12,8 @@ import hudson.Extension;
 import hudson.model.Item;
 import hudson.model.listeners.ItemListener;
 import jenkins.YesNoMaybe;
+
+import org.jenkinsci.plugins.extremenotification.MyPlugin;
 
 @Extension(dynamicLoadable=YesNoMaybe.YES)
 public class MyItemListener extends ItemListener {

@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.extremenotification;
+package org.jenkinsci.plugins.extremenotification.listeners;
 
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_SCM_CHANGELOG_PARSED;
 import static org.jenkinsci.plugins.extremenotification.MyPlugin.JENKINS_SCM_CHECKOUT;
@@ -14,6 +14,7 @@ import hudson.scm.SCMRevisionState;
 import jenkins.YesNoMaybe;
 
 import java.io.File;
+import org.jenkinsci.plugins.extremenotification.MyPlugin;
 
 @Extension(dynamicLoadable=YesNoMaybe.YES)
 public class MySCMListener extends SCMListener {
