@@ -86,18 +86,11 @@ public class MyRunListener extends RunListener<Run<?, ?>> {
 
 	private static Map<String, Object> getPayload(final Run<?, ?> run) {
 		return asMap(
-			"name", getName(run),
-			"fullDisplayName", run.getFullDisplayName(),
-			"parent", run.getParent().getFullDisplayName(),
+			"name", run.getParent().getFullDisplayName(),
 			"number", run.getNumber(),
+			"computer", run.getExecutor().getOwner().getName(),
 			"description", run.getDescription(),
 			"startTimeMillis", run.getStartTimeInMillis());
-	}
-
-	private static String getName(Run<?,?> run) {
-		final String name = run.getDisplayName();
-		int hashIndex = name.indexOf('#');
-		return hashIndex < 0 ? name : name.substring(0, hashIndex);
 	}
 
 	/**

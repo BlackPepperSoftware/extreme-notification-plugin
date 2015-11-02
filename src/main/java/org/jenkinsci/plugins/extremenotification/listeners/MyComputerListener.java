@@ -42,8 +42,7 @@ public class MyComputerListener extends ComputerListener {
 			JENKINS_COMPUTER_OFFLINE,
 			asMap("computer", computer, "cause", cause),
 			asMap("computer", getName(computer),
-				"cause", cause.toString(),
-				"connectTime", computer.getConnectTime())
+				"cause", cause.toString())
 		));
 	}
 
